@@ -174,6 +174,9 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
   const metaRef = useRef<HTMLDivElement>(null);
   const linkRowRefs = useRef<(HTMLDivElement | null)[]>([]);
   const magnetRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const curveStateRef = useRef({ cx: isOpen ? 100 : -100 });
+  const activeTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const hasInitializedRef = useRef(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -192,69 +195,143 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
   useEffect(() => {
     if (!isRendered) return;
 
-    if (isOpen) {
-      const validLinks = linkRowRefs.current.filter(Boolean);
+    if (activeTimelineRef.current) {
+      activeTimelineRef.current.kill();
+      activeTimelineRef.current = null;
+    }
 
-      gsap.set(backdropRef.current, { opacity: 0 });
-      gsap.set(menuRef.current, { x: 'calc(100% + 100px)' });
-      if (curvePathRef.current) {
-        gsap.set(curvePathRef.current, {
-          attr: { d: 'M100 0 L200 0 L200 100 L100 100 Q-100 50 100 0' }
-        });
+    const validLinks = linkRowRefs.current.filter(Boolean);
+
+    if (isOpen) {
+      if (!hasInitializedRef.current) {
+        gsap.set(backdropRef.current, { opacity: 0 });
+        gsap.set(menuRef.current, { xPercent: 100, x: 100 });
+        if (curvePathRef.current) {
+          curvePathRef.current.setAttribute('d', 'M100 0 L200 0 L200 100 L100 100 Q-100 50 100 0');
+        }
+        gsap.set(lineTopRef.current, { scaleX: 0, transformOrigin: 'left' });
+        gsap.set(lineBotRef.current, { scaleX: 0, transformOrigin: 'right' });
+        gsap.set(metaRef.current, { y: 20, opacity: 0 });
+        gsap.set(validLinks, { x: 80, opacity: 0 });
+        curveStateRef.current.cx = -100;
+        hasInitializedRef.current = true;
       }
-      gsap.set(lineTopRef.current, { scaleX: 0, transformOrigin: 'left' });
-      gsap.set(lineBotRef.current, { scaleX: 0, transformOrigin: 'right' });
-      gsap.set(metaRef.current, { y: 20, opacity: 0 });
-      gsap.set(validLinks, { x: 80, opacity: 0 });
 
       const tl = gsap.timeline();
+      activeTimelineRef.current = tl;
 
-      tl.to(backdropRef.current, { opacity: 1, duration: 0.35, ease: 'power2.out' }, 0)
-        .to(menuRef.current, { x: '0%', duration: 0.8, ease: 'power4.out' }, 0)
-        .to(curvePathRef.current, {
-          attr: { d: 'M100 0 L200 0 L200 100 L100 100 Q100 50 100 0' },
+      tl.to(backdropRef.current, {
+        opacity: 1,
+        duration: 0.35,
+        ease: 'power2.out',
+      }, 0)
+        .to(menuRef.current, {
+          xPercent: 0,
+          x: 0,
           duration: 0.8,
-          ease: 'power4.out'
+          ease: 'menuEase',
         }, 0)
-        .to(lineTopRef.current, { scaleX: 1, duration: 0.6, ease: 'power3.out' }, 0.1)
-        .to(lineBotRef.current, { scaleX: 1, duration: 0.6, ease: 'power3.out' }, 0.15)
-        .to(validLinks, {
+        .to(curveStateRef.current, {
+          cx: 100,
+          duration: 0.8,
+          ease: 'menuEase',
+          onUpdate: () => {
+            if (curvePathRef.current) {
+              curvePathRef.current.setAttribute(
+                'd',
+                `M100 0 L200 0 L200 100 L100 100 Q${curveStateRef.current.cx.toFixed(1)} 50 100 0`
+              );
+            }
+          },
+        }, 0)
+        .to(lineTopRef.current, {
+          scaleX: 1,
+          duration: 0.6,
+          ease: 'menuEase',
+        }, 0.1)
+        .to(lineBotRef.current, {
+          scaleX: 1,
+          duration: 0.6,
+          ease: 'menuEase',
+        }, 0.15)
+        .to(metaRef.current, {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: 'menuEase',
+        }, 0.25);
+
+      validLinks.forEach((link, i) => {
+        tl.to(link, {
           x: 0,
           opacity: 1,
           duration: 0.8,
-          stagger: 0.05,
-          ease: 'power4.out'
-        }, 0.1)
-        .to(metaRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, 0.25);
+          ease: 'menuEase',
+        }, 0.05 * i);
+      });
 
       return () => {
         tl.kill();
       };
     } else {
-      const validLinks = linkRowRefs.current.filter(Boolean);
       const tl = gsap.timeline({
         onComplete: () => {
           setIsRendered(false);
-        }
+          hasInitializedRef.current = false;
+          activeTimelineRef.current = null;
+        },
       });
+      activeTimelineRef.current = tl;
 
-      tl.to(validLinks, {
-        x: 80,
-        opacity: 0,
-        duration: 0.35,
-        stagger: 0.02,
-        ease: 'power3.in'
+      tl.to(menuRef.current, {
+        xPercent: 100,
+        x: 100,
+        duration: 0.8,
+        ease: 'menuEase',
       }, 0)
-        .to(metaRef.current, { y: 20, opacity: 0, duration: 0.3, ease: 'power2.in' }, 0)
-        .to(lineTopRef.current, { scaleX: 0, duration: 0.3, ease: 'power3.in' }, 0)
-        .to(lineBotRef.current, { scaleX: 0, duration: 0.3, ease: 'power3.in' }, 0)
-        .to(menuRef.current, { x: 'calc(100% + 100px)', duration: 0.7, ease: 'power4.inOut' }, 0.05)
-        .to(curvePathRef.current, {
-          attr: { d: 'M100 0 L200 0 L200 100 L100 100 Q-100 50 100 0' },
-          duration: 0.7,
-          ease: 'power4.inOut'
-        }, 0.05)
-        .to(backdropRef.current, { opacity: 0, duration: 0.35, ease: 'power2.inOut' }, 0.25);
+        .to(curveStateRef.current, {
+          cx: -100,
+          duration: 0.8,
+          ease: 'menuEase',
+          onUpdate: () => {
+            if (curvePathRef.current) {
+              curvePathRef.current.setAttribute(
+                'd',
+                `M100 0 L200 0 L200 100 L100 100 Q${curveStateRef.current.cx.toFixed(1)} 50 100 0`
+              );
+            }
+          },
+        }, 0)
+        .to(lineTopRef.current, {
+          scaleX: 0,
+          duration: 0.4,
+          ease: 'menuEase',
+        }, 0)
+        .to(lineBotRef.current, {
+          scaleX: 0,
+          duration: 0.4,
+          ease: 'menuEase',
+        }, 0)
+        .to(metaRef.current, {
+          y: 20,
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.in',
+        }, 0)
+        .to(backdropRef.current, {
+          opacity: 0,
+          duration: 0.35,
+          ease: 'power2.out',
+        }, 0.25);
+
+      validLinks.forEach((link, i) => {
+        tl.to(link, {
+          x: 80,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'menuEase',
+        }, 0.05 * i);
+      });
 
       return () => {
         tl.kill();
@@ -285,19 +362,21 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
     <>
       <div
         ref={backdropRef}
+        style={{ opacity: 0 }}
         className="fixed inset-0 z-[9980] bg-black/65"
         onClick={onClose}
       />
 
       <div
         ref={menuRef}
+        style={{ transform: 'translateX(100%) translateX(100px)' }}
         className="fixed top-0 right-0 h-screen w-full md:w-[46%] lg:w-[45%] xl:w-[42%] z-[9981] bg-surface flex flex-col pointer-events-auto transform-gpu shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <svg
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
-          className="absolute top-0 -left-[99px] h-full w-[100px] pointer-events-none fill-surface stroke-none overflow-visible"
+          className="absolute top-0 -left-[99px] h-full w-[100px] pointer-events-none fill-surface stroke-none overflow-visible will-change-transform"
         >
           <path
             ref={curvePathRef}
@@ -309,12 +388,12 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
         <div className="relative w-full h-full flex flex-col overflow-hidden">
           <div
             ref={lineTopRef}
-            style={{ transformOrigin: 'left' }}
+            style={{ transform: 'scaleX(0)', transformOrigin: 'left' }}
             className="absolute top-[72px] left-0 right-0 h-px bg-border-subtler"
           />
           <div
             ref={lineBotRef}
-            style={{ transformOrigin: 'right' }}
+            style={{ transform: 'scaleX(0)', transformOrigin: 'right' }}
             className="absolute bottom-[170px] md:bottom-[100px] left-0 right-0 h-px bg-border-subtler"
           />
 
@@ -327,6 +406,7 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
               <div
                 key={link.href}
                 ref={(el) => { linkRowRefs.current[i] = el; }}
+                style={{ transform: 'translateX(80px)', opacity: 0 }}
                 className="overflow-hidden py-1.5 md:py-2"
               >
                 <div
@@ -356,6 +436,7 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
 
           <div
             ref={metaRef}
+            style={{ transform: 'translateY(20px)', opacity: 0 }}
             className="absolute bottom-0 left-0 right-0 h-[170px] md:h-[100px] px-8 sm:px-10 md:px-14 pt-6 pb-6 md:pb-10 flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-start md:items-end"
           >
             <div className="space-y-1 text-left">

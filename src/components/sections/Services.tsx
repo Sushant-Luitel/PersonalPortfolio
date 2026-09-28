@@ -34,18 +34,18 @@ const Services = () => {
     { t: 'DO' },
   ];
   const descriptionText =
-    "I specialize in building full-stack web applications that are fast, reliable, and user-friendly. With a solid foundation in both frontend and backend technologies, I help bring ideas to life whether it's for a business, a startup, or a product team.";
+    'I build scalable, maintainable, and high-performance frontend applications with React and Next.js, turning complex requirements into intuitive interfaces.';
 
   const services = [
     {
       id: '01',
-      title: 'Full Stack Development',
+      title: 'Frontend Engineering',
       description:
-        'End-to-end development of modern web applications, covering everything from frontend interfaces to backend APIs. I build complete, maintainable, and scalable systems using the MERN stack and modern tooling.',
+        'Production frontend implementation across architecture, reusable component systems, API integration, and responsive user experiences.',
       items: [
-        'MERN Stack (MongoDB, Express.js, React, Node.js)',
-        'REST APIs & Integration',
-        'Authentication & Authorization',
+        'React & Next.js applications',
+        'Reusable UI systems',
+        'API integration & state management',
       ],
     },
     {
@@ -54,7 +54,7 @@ const Services = () => {
       description:
         'Crafting responsive, accessible, and elegant interfaces that deliver exceptional user experiences. I focus on clarity, performance, and seamless interaction across devices.',
       items: [
-        'React, Next.js, TailwindCSS, GSAP',
+        'TypeScript, React, Next.js, Tailwind CSS',
         'Optimized Rendering & Animations',
         'Figma to Code Implementation',
       ],
@@ -67,7 +67,7 @@ const Services = () => {
       items: [
         'Performance Tuning & Code Refactoring',
         'SEO & Accessibility Optimization',
-        'Deployment (Vercel, AWS, Docker)',
+        'Deployment (Vercel, AWS, Cloudflare)',
       ],
     },
   ];

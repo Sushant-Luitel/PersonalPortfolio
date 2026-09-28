@@ -31,9 +31,9 @@ export const STACK_SECTIONS: StackCategory[] = [
       { name: 'TypeScript', category: 'frontend', icon: '/Services/typescript.svg' },
       { name: 'React', category: 'frontend', icon: '/Services/react.png' },
       { name: 'Next.js', category: 'frontend', icon: '/Services/next.webp' },
-      { name: 'Redux Toolkit', category: 'frontend', icon: '/Services/reduxtoolkit.svg' },
+      { name: 'TanStack Query', category: 'frontend', icon: '/Services/reduxtoolkit.svg' },
       { name: 'Tailwind CSS', category: 'frontend', icon: '/Services/tailwind.png' },
-      { name: 'Bootstrap', category: 'frontend', icon: '/Services/bootstrap.svg' },
+      { name: 'Zustand', category: 'frontend', icon: '/Services/reduxtoolkit.svg' },
       { name: 'GSAP', category: 'frontend', icon: '/Services/gsap.png' },
     ],
   },
@@ -43,39 +43,34 @@ export const STACK_SECTIONS: StackCategory[] = [
     technologies: [
       { name: 'Node.js', category: 'backend', icon: '/Services/node.png' },
       { name: 'Express.js', category: 'backend', icon: '/Services/express.png' },
-      { name: 'Socket.io', category: 'backend', icon: '/Services/socketio.svg' },
-      { name: 'Firebase', category: 'backend', icon: '/Services/firebase.svg' },
+      { name: 'REST APIs', category: 'backend', icon: '/Services/express.png' },
     ],
   },
   {
     id: 'database',
-    title: 'DATABASE & ORM',
+    title: 'DATABASE',
     technologies: [
       { name: 'MongoDB', category: 'database', icon: '/Services/mongodb.svg' },
-      { name: 'Mongoose', category: 'database', icon: '/Services/mongoose.svg' },
-      { name: 'MySQL', category: 'database', icon: '/Services/mysql.svg' },
+      { name: 'PostgreSQL', category: 'database', icon: '/Services/mysql.svg' },
     ],
   },
   {
     id: 'devops',
     title: 'DEVOPS & CLOUD',
     technologies: [
-      { name: 'Docker', category: 'devops', icon: '/Services/docker.svg' },
       { name: 'GitHub Actions', category: 'devops', icon: '/Services/githubactions.svg' },
       { name: 'AWS', category: 'devops', icon: '/Services/aws.webp' },
-      { name: 'Nginx', category: 'devops', icon: '/Services/nginx.svg' },
+      { name: 'Cloudflare', category: 'devops', icon: '/Services/aws.webp' },
+      { name: 'Netlify', category: 'devops', icon: '/Services/aws.webp' },
       { name: 'Linux', category: 'devops', icon: '/Services/linux.svg' },
     ],
   },
   {
     id: 'tools',
-    title: 'AI, TESTING & TOOLS',
+    title: 'TOOLS',
     technologies: [
-      { name: 'Gemini AI', category: 'tools', icon: '/Services/geminiai.svg' },
-      { name: 'Jest', category: 'tools', icon: '/Services/jest.svg' },
+      { name: 'React Hook Form', category: 'tools', icon: '/Services/react.png' },
       { name: 'Zod', category: 'tools', icon: '/Services/zod.svg' },
-      { name: 'Stripe', category: 'tools', icon: '/Services/stripe.svg' },
-      { name: 'Cloudinary', category: 'tools', icon: '/Services/cloudinary.svg' },
       { name: 'Git', category: 'tools', icon: '/Services/git.png' },
       { name: 'Postman', category: 'tools', icon: '/Services/postman-icon.svg' },
       { name: 'Figma', category: 'tools', icon: '/Services/figma.png' },
@@ -95,7 +90,7 @@ const TechStack = () => {
     { t: 'stack', serif: true },
   ];
   const descriptionText =
-    'A selection of technologies I use to design, build, and deploy full-stack web applications.';
+    'A selection of technologies I use to design, build, and maintain frontend applications.';
 
   const filterOptions = [
     { id: 'all', label: 'All Categories' },

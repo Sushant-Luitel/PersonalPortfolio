@@ -9,7 +9,7 @@ export default function MarqueeStrip() {
   const track1Ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 
-  const items = ['Available for Work', 'Open to Opportunities', "Let's Build", 'MERN Stack'];
+  const items = ['Frontend Engineer', 'React & Next.js', "Let's Build", 'Kathmandu, Nepal'];
 
   useEffect(() => {
     if (reduced) return;

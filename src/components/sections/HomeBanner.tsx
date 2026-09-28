@@ -280,13 +280,13 @@ const HomeBanner = () => {
                 data-hero-line
                 className="block font-display font-black uppercase text-hero tracking-tight"
               >
-                AITEZAZ
+                SUSHANT
               </span>
               <span
                 data-hero-line
                 className="serif-accent block text-hero-sm leading-[0.85] md:ml-[14vw]"
               >
-                sikandar
+                luitel
               </span>
             </span>
           </h1>
@@ -302,7 +302,7 @@ const HomeBanner = () => {
               ref={paragraphRef}
               className="text-warm font-sans text-base sm:text-lg md:text-xl leading-relaxed mb-8 md:mb-10 text-center mx-auto"
             >
-              Full-stack engineer building fast, scalable, and reliable web applications.
+              I build interactive digital experiences with React and Next.js, combining thoughtful design, clean architecture, and smooth interactions.
             </p>
 
             <div ref={tickerRef} className="w-full flex justify-center">
@@ -324,11 +324,11 @@ const HomeBanner = () => {
               />
               <AnimatedButton
                 as="a"
-                href="/01_aitezaz_resume.pdf"
+                href="#about"
                 target="_blank"
                 rel="noopener noreferrer"
-                topText="RESUME"
-                bottomText="DOWNLOAD →"
+                topText="ABOUT"
+                bottomText="ME →"
                 variant="outline"
               />
             </div>

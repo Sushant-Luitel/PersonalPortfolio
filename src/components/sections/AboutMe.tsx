@@ -8,31 +8,26 @@ import FlowField from '@/components/canvas/FlowField';
 
 const CREDENTIALS = [
   {
-    year: '2026',
-    title: 'Software Engineer Intern - MERN Stack',
-    organization: 'e-strats, Islamabad',
+    year: '2024–Present',
+    title: 'Software Engineer',
+    organization: 'Global Square IT Pvt. Ltd., Kathmandu, Nepal',
     type: 'Industry',
   },
   {
-    year: '2026',
-    title: 'HEC National Skills Competency Test (NSCT)',
-    organization: 'HEC, PSEB & P@SHA',
-    stat: '95th Percentile, Top 5% nationwide',
-    type: 'Recognition',
+    year: '2023–2024',
+    title: 'React Developer Intern',
+    organization: 'KSW Techzone, Kathmandu, Nepal',
+    stat: 'Figma to React interfaces, reusable components, and collaborative development',
+    type: 'Industry',
   },
   {
-    year: '2024-25',
-    title: 'Web and Mobile App Development',
-    organization: 'Saylani Mass IT Training (SMIT), Peshawar',
-    stat: 'Full-Stack MERN, TypeScript, Next.js & Hybrid Apps',
-    type: 'Certification',
-  },
-  {
-    year: '2022-26',
-    title: 'BS Computer Science',
-    organization: 'University of Peshawar',
-    stat: '3.60 / 4.00 GPA',
+    year: '2021–Present',
+    title: 'BSc CSIT',
+    organization: 'Bhaktapur Multiple Campus, Kathmandu, Nepal',
+    stat: 'Average: 80%',
     type: 'Education',
+  },
+  {
   },
 ];
 
@@ -43,8 +38,8 @@ const About = () => {
     { t: 'i?' },
   ];
   const descriptionText =
-    'I am a software engineer driven by a passion for building clean, intuitive, and reliable digital experiences.';
-  const aboutMeText = `I build web applications that bridge thoughtful frontend interfaces with robust backend systems. To me, software is more than code on a screen; it is about making technology feel effortless and genuinely useful to real people.\n\nMy journey began with a simple curiosity for how things work under the hood. Over time, that curiosity evolved into a genuine passion for fluid interface animations, reliable backend architecture, and building user journeys that feel effortless and alive.\n\nWhether I am polishing micro-interactions or engineering full-stack systems, my core focus remains unchanged: creating software that brings people joy, solves real problems, and leaves a lasting positive impact.`;
+    'I am a frontend engineer driven by a passion for building clean, intuitive, and reliable digital experiences.';
+  const aboutMeText = `I’m a frontend engineer focused on building scalable, maintainable, and high-performance web applications. I have 2.5+ years of professional experience working primarily with React and Next.js, across frontend architecture, reusable component systems, state management, API integration, and production applications.\n\nI enjoy turning complex requirements into simple, intuitive interfaces while keeping the underlying codebase clean and maintainable. In my current role, I take on senior-level responsibilities including technical mentorship, code reviews, architectural decision-making, and ownership of multi-application frontend systems.\n\nBeyond frontend development, I’m continuously expanding my understanding of backend systems, cloud infrastructure, and software architecture to become a more complete engineer.`;
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLDivElement>(null);

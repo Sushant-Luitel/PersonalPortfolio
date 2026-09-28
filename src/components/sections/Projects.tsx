@@ -324,7 +324,7 @@ function MobileSnapProjects({ projects, router }: MobileSnapProjectsProps) {
               >
                 <Image
                   src={project.hoverImage || project.images[0]}
-                  alt={project.title}
+                  alt={`${project.title} project interface preview`}
                   fill
                   sizes="(max-width: 767px) calc(100vw - 32px)"
                   priority={index < 2}
@@ -694,7 +694,7 @@ export default function ProjectsPage() {
                     >
                       <Image
                         src={imgUrl}
-                        alt={project.title}
+                        alt=""
                         fill
                         sizes="480px"
                         priority={idx < 2}

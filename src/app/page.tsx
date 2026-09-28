@@ -15,10 +15,15 @@ import Contact from '@/components/sections/Contact';
 import Footer from '@/components/shared/Footer';
 import Navbar from '@/components/shared/Navbar';
 import HomeScrollOrchestrator from '@/components/home/HomeScrollOrchestrator';
+import { homeStructuredData, serializeJsonLd } from '@/lib/structured-data';
 
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(homeStructuredData) }}
+      />
       <Navbar />
       <HomeScrollOrchestrator
         banner={<HomeBanner />}

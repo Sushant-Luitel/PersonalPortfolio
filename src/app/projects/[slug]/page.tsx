@@ -1,11 +1,13 @@
 import ProjectDetails from '@/components/project/ProjectDetails';
 import { getProjectBySlug, getAllProjects } from '@/lib/projects';
 import { notFound } from 'next/navigation';
+import type  Metadata  from 'next';
+import { site } from '@/lib/site';
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) {
@@ -16,9 +18,14 @@ export async function generateMetadata({ params }: PageProps) {
   return {
     title: project.title,
     description: project.description,
+    alternates: {
+      canonical: `/projects/${project.slug}`,
+    },
     openGraph: {
       title: `${project.title} - Sushant Luitel`,
       description: project.description,
+      url: `${site.url}/projects/${project.slug}`,
+      siteName: 'Sushant Luitel Portfolio',
       images: [
         {
           url: project.hoverImage || project.images[0],

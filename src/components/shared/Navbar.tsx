@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { useTransitionState } from 'next-transition-router';
 import { useLenis } from '@/components/providers/SmoothScrollProvider';
@@ -9,7 +10,6 @@ import { useHandleLinkClick } from '@/lib/navigation';
 import { site, socials } from '@/lib/site';
 import Link from 'next/link';
 import Lenis from 'lenis';
-import { Copyright } from 'lucide-react';
 import Magnetic from '@/components/ui/Magnetic';
 
 interface MagneticHamburgerButtonProps {
@@ -132,8 +132,8 @@ const NavbarBrand: React.FC<NavbarBrandProps> = ({ logoRef, handleLinkClick }) =
         className="group flex items-center cursor-pointer select-none py-1 text-warm"
         aria-label="sushant dev luitel — home"
       >
-        <div className="transition-transform duration-500 ease-in-expo group-hover:rotate-[360deg] flex items-center justify-center">
-          <Copyright className="w-[18px] h-[18px]" />
+        <div className="transition-transform duration-500 ease-in-expo group-hover:rotate-[360deg] flex items-center justify-center overflow-hidden rounded-sm">
+          <Image src="/brand-logo.png" alt="" width={42} height={34} priority className="h-[30px] w-[38px] object-cover object-center" />
         </div>
         <div className="relative ms-2 flex items-center whitespace-nowrap text-warm text-lg font-sans tracking-wide font-medium leading-none">
           <span>sushant</span>

@@ -34,9 +34,9 @@ export const siteMetadata: Metadata = {
     canonical: 'https://sushantluitel.com.np/',
   },
   icons: {
-    icon: '/logo.webp',
-    shortcut: '/logo.webp',
-    apple: '/logo.webp',
+    icon: '/brand-logo.png',
+    shortcut: '/brand-logo.png',
+    apple: '/brand-logo.png',
   },
   manifest: '/manifest.webmanifest',
   openGraph: {

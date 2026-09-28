@@ -1,10 +1,14 @@
 import { ImageResponse } from 'next/og';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 
 export const alt = 'Sushant Luitel — Frontend Developer';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
+  const logo = await readFile(path.join(process.cwd(), 'public/brand-logo.png'));
+  const logoData = `data:image/png;base64,${logo.toString('base64')}`;
   return new ImageResponse(
     (
       <div
@@ -20,15 +24,7 @@ export default function OpenGraphImage() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-          <div
-            style={{
-              width: 18,
-              height: 18,
-              borderRadius: 999,
-              background: '#c45d3e',
-              boxShadow: '0 0 36px rgba(196, 93, 62, 0.8)',
-            }}
-          />
+          <img src={logoData} width="96" height="76" style={{ objectFit: 'cover' }} />
           <span style={{ fontSize: 24, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
             Frontend Developer
           </span>

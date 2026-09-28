@@ -4,11 +4,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 
 export const preloaderWords = [
-  'السلام علیکم',
   'नमस्ते',
+  'Hello',
   'Hola',
-  'مرحباً',
-  'په خیر راغلي',
+  'Bonjour',
+  'こんにちは',
   'Welcome',
 ];
 

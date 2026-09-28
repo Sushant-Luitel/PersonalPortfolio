@@ -165,7 +165,7 @@ interface FullscreenMenuProps {
 }
 
 const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handleLinkClick, links }) => {
-  const [isRendered, setIsRendered] = useState(isOpen);
+  const containerRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const curvePathRef = useRef<SVGPathElement>(null);
@@ -174,26 +174,36 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
   const metaRef = useRef<HTMLDivElement>(null);
   const linkRowRefs = useRef<(HTMLDivElement | null)[]>([]);
   const magnetRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const curveStateRef = useRef({ cx: isOpen ? 100 : -100 });
+  const curveStateRef = useRef({ cx: 100 });
   const activeTimelineRef = useRef<gsap.core.Timeline | null>(null);
-  const hasInitializedRef = useRef(false);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    if (isOpen) {
-      setIsRendered(true);
+    const validLinks = linkRowRefs.current.filter(Boolean);
+    gsap.set(backdropRef.current, { opacity: 0 });
+    gsap.set(menuRef.current, { xPercent: 100, x: 100 });
+    gsap.set(lineTopRef.current, { scaleX: 0, transformOrigin: 'left' });
+    gsap.set(lineBotRef.current, { scaleX: 0, transformOrigin: 'right' });
+    gsap.set(metaRef.current, { y: 20, opacity: 0 });
+    gsap.set(validLinks, { x: 80, opacity: 0 });
+    if (curvePathRef.current) {
+      curvePathRef.current.setAttribute('d', 'M100 0 L200 0 L200 100 L100 100 Q100 50 100 0');
     }
-  }, [isOpen]);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape' && isOpen) onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  }, [isOpen, onClose]);
 
   useEffect(() => {
-    if (!isRendered) return;
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
 
     if (activeTimelineRef.current) {
       activeTimelineRef.current.kill();
@@ -203,18 +213,16 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
     const validLinks = linkRowRefs.current.filter(Boolean);
 
     if (isOpen) {
-      if (!hasInitializedRef.current) {
-        gsap.set(backdropRef.current, { opacity: 0 });
-        gsap.set(menuRef.current, { xPercent: 100, x: 100 });
+      if (containerRef.current) {
+        containerRef.current.style.visibility = 'visible';
+      }
+
+      const isClosed = !curveStateRef.current || Math.abs(curveStateRef.current.cx - 100) < 1;
+      if (isClosed) {
+        curveStateRef.current.cx = -100;
         if (curvePathRef.current) {
           curvePathRef.current.setAttribute('d', 'M100 0 L200 0 L200 100 L100 100 Q-100 50 100 0');
         }
-        gsap.set(lineTopRef.current, { scaleX: 0, transformOrigin: 'left' });
-        gsap.set(lineBotRef.current, { scaleX: 0, transformOrigin: 'right' });
-        gsap.set(metaRef.current, { y: 20, opacity: 0 });
-        gsap.set(validLinks, { x: 80, opacity: 0 });
-        curveStateRef.current.cx = -100;
-        hasInitializedRef.current = true;
       }
 
       const tl = gsap.timeline();
@@ -239,7 +247,7 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
             if (curvePathRef.current) {
               curvePathRef.current.setAttribute(
                 'd',
-                `M100 0 L200 0 L200 100 L100 100 Q${curveStateRef.current.cx.toFixed(1)} 50 100 0`
+                `M100 0 L200 0 L200 100 L100 100 Q${curveStateRef.current.cx} 50 100 0`
               );
             }
           },
@@ -269,15 +277,12 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
           ease: 'menuEase',
         }, 0.05 * i);
       });
-
-      return () => {
-        tl.kill();
-      };
     } else {
       const tl = gsap.timeline({
         onComplete: () => {
-          setIsRendered(false);
-          hasInitializedRef.current = false;
+          if (containerRef.current) {
+            containerRef.current.style.visibility = 'hidden';
+          }
           activeTimelineRef.current = null;
         },
       });
@@ -297,7 +302,7 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
             if (curvePathRef.current) {
               curvePathRef.current.setAttribute(
                 'd',
-                `M100 0 L200 0 L200 100 L100 100 Q${curveStateRef.current.cx.toFixed(1)} 50 100 0`
+                `M100 0 L200 0 L200 100 L100 100 Q${curveStateRef.current.cx} 50 100 0`
               );
             }
           },
@@ -328,16 +333,12 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
         tl.to(link, {
           x: 80,
           opacity: 0,
-          duration: 0.8,
+          duration: 0.5,
           ease: 'menuEase',
-        }, 0.05 * i);
+        }, 0.03 * i);
       });
-
-      return () => {
-        tl.kill();
-      };
     }
-  }, [isOpen, isRendered]);
+  }, [isOpen]);
 
   const handleMagneticMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
     if (typeof window !== 'undefined' && (window.matchMedia('(pointer: coarse)').matches || !window.matchMedia('(hover: hover)').matches)) return;
@@ -356,21 +357,22 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
     gsap.to(el, { x: 0, y: 0, duration: 0.65, ease: 'elastic.out(1, 0.35)' });
   };
 
-  if (!isRendered) return null;
-
   return (
-    <>
+    <div
+      ref={containerRef}
+      style={{ visibility: 'hidden' }}
+      className="fixed inset-0 z-[9980] pointer-events-none"
+      aria-hidden={!isOpen}
+    >
       <div
         ref={backdropRef}
-        style={{ opacity: 0 }}
-        className="fixed inset-0 z-[9980] bg-black/65"
+        className="fixed inset-0 bg-black/65 pointer-events-auto"
         onClick={onClose}
       />
 
       <div
         ref={menuRef}
-        style={{ transform: 'translateX(100%) translateX(100px)' }}
-        className="fixed top-0 right-0 h-screen w-full md:w-[46%] lg:w-[45%] xl:w-[42%] z-[9981] bg-surface flex flex-col pointer-events-auto transform-gpu shadow-2xl"
+        className="fixed top-0 right-0 h-screen w-full md:w-[46%] lg:w-[45%] xl:w-[42%] z-[9981] bg-surface flex flex-col pointer-events-auto shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <svg
@@ -380,7 +382,7 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
         >
           <path
             ref={curvePathRef}
-            d="M100 0 L200 0 L200 100 L100 100 Q-100 50 100 0"
+            d="M100 0 L200 0 L200 100 L100 100 Q100 50 100 0"
             fill="#0d0d0c"
           />
         </svg>
@@ -388,12 +390,10 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
         <div className="relative w-full h-full flex flex-col overflow-hidden">
           <div
             ref={lineTopRef}
-            style={{ transform: 'scaleX(0)', transformOrigin: 'left' }}
             className="absolute top-[72px] left-0 right-0 h-px bg-border-subtler"
           />
           <div
             ref={lineBotRef}
-            style={{ transform: 'scaleX(0)', transformOrigin: 'right' }}
             className="absolute bottom-[170px] md:bottom-[100px] left-0 right-0 h-px bg-border-subtler"
           />
 
@@ -406,7 +406,6 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
               <div
                 key={link.href}
                 ref={(el) => { linkRowRefs.current[i] = el; }}
-                style={{ transform: 'translateX(80px)', opacity: 0 }}
                 className="overflow-hidden py-1.5 md:py-2"
               >
                 <div
@@ -436,7 +435,6 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
 
           <div
             ref={metaRef}
-            style={{ transform: 'translateY(20px)', opacity: 0 }}
             className="absolute bottom-0 left-0 right-0 h-[170px] md:h-[100px] px-8 sm:px-10 md:px-14 pt-6 pb-6 md:pb-10 flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-start md:items-end"
           >
             <div className="space-y-1 text-left">
@@ -470,9 +468,10 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
+
 
 
 interface NavbarProps {
@@ -633,7 +632,6 @@ const Navbar: React.FC<NavbarProps> = ({ hamburgerOnly = false }) => {
         lenis.stop();
       } else {
         lenis.start();
-        ScrollTrigger.refresh();
       }
     }
     document.body.style.overflow = isMenuOpen ? 'hidden' : '';

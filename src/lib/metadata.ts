@@ -1,4 +1,4 @@
-import  Metadata  from 'next';
+import type { Metadata } from 'next';
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL('https://sushantluitel.com.np'),
@@ -36,6 +36,7 @@ export const siteMetadata: Metadata = {
   icons: {
     icon: '/logo.webp',
     shortcut: '/logo.webp',
+    apple: '/logo.webp',
   },
   manifest: '/manifest.webmanifest',
   openGraph: {

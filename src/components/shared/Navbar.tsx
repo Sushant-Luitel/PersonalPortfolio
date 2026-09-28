@@ -130,7 +130,7 @@ const NavbarBrand: React.FC<NavbarBrandProps> = ({ logoRef, handleLinkClick }) =
           handleLinkClick('/#top');
         }}
         className="group flex items-center cursor-pointer select-none py-1 text-warm"
-        aria-label="Sushant Luitel Home"
+        aria-label="sushant dev luitel — home"
       >
         <div className="transition-transform duration-500 ease-in-expo group-hover:rotate-[360deg] flex items-center justify-center">
           <Copyright className="w-[18px] h-[18px]" />
@@ -439,28 +439,26 @@ const FullscreenMenu: React.FC<FullscreenMenuProps> = ({ isOpen, onClose, handle
           >
             <div className="space-y-1 text-left">
               <p className="text-gray-mid font-mono text-xs uppercase tracking-widest mb-1.5">Get in Touch</p>
-              <Magnetic strength={0.3}>
-                <a
-                  href={`mailto:${site.email}`}
-                  className="group relative inline-block text-muted hover:text-white text-xs sm:text-sm transition-colors duration-300 py-0.5"
-                >
+              {site.email && <Magnetic strength={0.3}>
+                <a href={`mailto:${site.email}`} aria-label={`Email ${site.email}`} className="group relative inline-block text-muted hover:text-white text-xs sm:text-sm transition-colors duration-300 py-0.5">
                   <span>{site.email}</span>
-                  <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out pointer-events-none block" />
+                  <span aria-hidden="true" className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out pointer-events-none block" />
                 </a>
-              </Magnetic>
+              </Magnetic>}
             </div>
 
             <div className="flex gap-4 md:gap-6 justify-start flex-wrap">
-              {[socials.github, socials.source, socials.linkedin].map((s) => (
+              {[socials.github, socials.source, socials.linkedin].filter((s) => s.href).map((s) => (
                 <Magnetic key={s.label} strength={0.3}>
                   <a
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Open ${s.label}`}
                     className="group relative inline-block text-gray-mid hover:text-cream text-xs font-mono uppercase tracking-widest transition-colors duration-300 py-1"
                   >
                     <span>{s.label}</span>
-                    <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out pointer-events-none block" />
+                    <span aria-hidden="true" className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out pointer-events-none block" />
                   </a>
                 </Magnetic>
               ))}

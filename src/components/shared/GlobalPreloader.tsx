@@ -12,8 +12,8 @@ export const preloaderWords = [
   'Welcome',
 ];
 
-const MIN_DISPLAY_MS = 1400;
-const HARD_CAP_MS = 3200;
+const MIN_DISPLAY_MS = 450;
+const HARD_CAP_MS = 1200;
 
 export default function GlobalPreloader({ onComplete }: { onComplete?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -68,6 +68,10 @@ export default function GlobalPreloader({ onComplete }: { onComplete?: () => voi
   };
 
   useEffect(() => {
+    if (window.innerWidth < 768) {
+      onCompleteRef.current?.();
+      return;
+    }
     startedAtRef.current = performance.now();
     document.fonts?.ready.then(() => {
       fontsResolvedRef.current = true;
@@ -90,6 +94,7 @@ export default function GlobalPreloader({ onComplete }: { onComplete?: () => voi
   }, []);
 
   useEffect(() => {
+    if (window.innerWidth < 768) return;
     let rafId: number;
     const tick = () => {
       const elapsed = performance.now() - startedAtRef.current;

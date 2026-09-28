@@ -1,7 +1,7 @@
 import ProjectDetails from '@/components/project/ProjectDetails';
 import { getProjectBySlug, getAllProjects } from '@/lib/projects';
 import { notFound } from 'next/navigation';
-import type  Metadata  from 'next';
+import type { Metadata } from 'next';
 import { site } from '@/lib/site';
 interface PageProps {
   params: Promise<{ slug: string }>;

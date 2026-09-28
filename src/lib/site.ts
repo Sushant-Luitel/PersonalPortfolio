@@ -6,7 +6,7 @@ export const site = {
 } as const;
 export type SocialKey = 'github' | 'linkedin' | 'instagram' | 'source';
 export const socials: Record<SocialKey, { label: string; href: string }> = {
-  github: { label: 'GitHub', href: '' }, linkedin: { label: 'LinkedIn', href: '' }, instagram: { label: 'Instagram', href: '' }, source: { label: 'Source Code', href: '' },
+  github: { label: 'GitHub', href: 'https://github.com/Sushant-Luitel' }, linkedin: { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sushant-luitel/' }, instagram: { label: 'Instagram', href: '' }, source: { label: 'Source Code', href: 'https://github.com/Sushant-Luitel' },
 };
 export const socialList = Object.values(socials).filter((social) => social.href);
 export const navLinks = [

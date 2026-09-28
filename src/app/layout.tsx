@@ -10,8 +10,8 @@ import { Geist, Geist_Mono, Space_Grotesk, Instrument_Serif } from 'next/font/go
 import './globals.css';
 import ClientLayout from './ClientLayout';
 import { siteMetadata } from '@/lib/metadata';
-import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import AnalyticsLoader from '@/components/providers/AnalyticsLoader';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -41,8 +41,15 @@ const instrumentSerif = Instrument_Serif({
 });
 export const metadata = siteMetadata;
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const enableAnalytics = process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true';
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="description"
+          content="The personal portfolio of Sushant Luitel, a frontend engineer building production web applications with React, Next.js, Astro, and TypeScript."
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${instrumentSerif.variable} antialiased bg-cream`}
       >
@@ -50,8 +57,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <ClientLayout>{children}</ClientLayout>
-        <Analytics />
-        {process.env.NEXT_PUBLIC_GA_ID && (
+        <AnalyticsLoader enabled={enableAnalytics} />
+        {enableAnalytics && process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}
       </body>

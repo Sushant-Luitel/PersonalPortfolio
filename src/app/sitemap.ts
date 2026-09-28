@@ -1,4 +1,4 @@
-import type  MetadataRoute  from 'next';
+import type { MetadataRoute } from 'next';
 import { getAllProjects } from '@/lib/projects';
 import { site } from '@/lib/site';
 

@@ -66,7 +66,7 @@ const StampBadge = ({ onClick }: { onClick: () => void }) => (
     <button
       type="button"
       onClick={onClick}
-      aria-label="Scroll to contact section"
+      aria-label="Available for work — let’s build — scroll to contact section"
       className="group relative w-28 h-28 lg:w-36 lg:h-36 rounded-full grid place-items-center select-none"
     >
       <svg viewBox="0 0 200 200" className="stamp-disc absolute inset-0 w-full h-full" aria-hidden="true">
@@ -106,6 +106,10 @@ const HomeBanner = () => {
 
   const playIntro = useCallback(() => {
     if (reduced || !nameRef.current || hasPlayedRef.current) return;
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      hasPlayedRef.current = true;
+      return;
+    }
     hasPlayedRef.current = true;
 
     const lines = nameRef.current.querySelectorAll<HTMLElement>('[data-hero-line]');
@@ -165,6 +169,7 @@ const HomeBanner = () => {
       }
       return;
     }
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
     if (typeof window !== 'undefined' && window.__preloaderDone === true) {
       const cleanup = playIntro();
       return cleanup;
@@ -325,8 +330,6 @@ const HomeBanner = () => {
               <AnimatedButton
                 as="a"
                 href="#about"
-                target="_blank"
-                rel="noopener noreferrer"
                 topText="ABOUT"
                 bottomText="ME →"
                 variant="outline"

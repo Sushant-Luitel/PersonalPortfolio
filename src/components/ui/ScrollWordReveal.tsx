@@ -43,7 +43,7 @@ export const ScrollWordReveal: React.FC<ScrollWordRevealProps> = ({
   dimOpacity = 0.22,
   offset = ['start 0.99', 'end 0.85'],
   highlightColor = '#f0ede6',
-  dimColor = 'rgba(240, 237, 230, 0.22)',
+  dimColor = 'rgba(240, 237, 230, 0.72)',
   accentColor = '#E07A5F',
 }) => {
   const containerRef = useRef<HTMLParagraphElement>(null);
@@ -101,9 +101,9 @@ export const ScrollWordReveal: React.FC<ScrollWordRevealProps> = ({
   );
 
   return (
-    <p ref={containerRef} className={`flex flex-wrap ${className}`}>
+    <p ref={containerRef} aria-label={text} className={`flex flex-wrap ${className}`}>
       {tokens.map((tok, i) => (
-        <span key={`${tok.t}-${i}`} className="relative inline-block mr-[0.28em] my-[0.04em]">
+        <span aria-hidden="true" key={`${tok.t}-${i}`} className="relative inline-block mr-[0.28em] my-[0.04em]">
           <span
             className={`swr-word inline-block ${
               tok.accent ? 'serif-accent normal-case text-[1.12em]' : ''

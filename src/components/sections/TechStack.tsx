@@ -31,9 +31,9 @@ export const STACK_SECTIONS: StackCategory[] = [
       { name: 'TypeScript', category: 'frontend', icon: '/Services/typescript.svg' },
       { name: 'React', category: 'frontend', icon: '/Services/react.png' },
       { name: 'Next.js', category: 'frontend', icon: '/Services/next.webp' },
-      { name: 'TanStack Query', category: 'frontend', icon: '/Services/reduxtoolkit.svg' },
+      { name: 'TanStack Query', category: 'frontend', icon: '/Services/tanstack-query.svg' },
       { name: 'Tailwind CSS', category: 'frontend', icon: '/Services/tailwind.png' },
-      { name: 'Zustand', category: 'frontend', icon: '/Services/reduxtoolkit.svg' },
+      { name: 'Zustand', category: 'frontend', icon: '/Services/zustand.svg' },
       { name: 'GSAP', category: 'frontend', icon: '/Services/gsap.png' },
     ],
   },
@@ -43,7 +43,7 @@ export const STACK_SECTIONS: StackCategory[] = [
     technologies: [
       { name: 'Node.js', category: 'backend', icon: '/Services/node.png' },
       { name: 'Express.js', category: 'backend', icon: '/Services/express.png' },
-      { name: 'REST APIs', category: 'backend', icon: '/Services/express.png' },
+      { name: 'REST APIs', category: 'backend', icon: '/Services/rest-api.svg' },
     ],
   },
   {
@@ -51,7 +51,7 @@ export const STACK_SECTIONS: StackCategory[] = [
     title: 'DATABASE',
     technologies: [
       { name: 'MongoDB', category: 'database', icon: '/Services/mongodb.svg' },
-      { name: 'PostgreSQL', category: 'database', icon: '/Services/mysql.svg' },
+      { name: 'PostgreSQL', category: 'database', icon: '/Services/postgresql.svg' },
     ],
   },
   {
@@ -60,8 +60,8 @@ export const STACK_SECTIONS: StackCategory[] = [
     technologies: [
       { name: 'GitHub Actions', category: 'devops', icon: '/Services/githubactions.svg' },
       { name: 'AWS', category: 'devops', icon: '/Services/aws.webp' },
-      { name: 'Cloudflare', category: 'devops', icon: '/Services/aws.webp' },
-      { name: 'Netlify', category: 'devops', icon: '/Services/aws.webp' },
+      { name: 'Cloudflare', category: 'devops', icon: '/Services/cloudflare.svg' },
+      { name: 'Netlify', category: 'devops', icon: '/Services/netlify.svg' },
       { name: 'Linux', category: 'devops', icon: '/Services/linux.svg' },
     ],
   },

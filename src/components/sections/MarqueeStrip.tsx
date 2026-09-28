@@ -123,7 +123,7 @@ export default function MarqueeStrip() {
           ref={track1Ref}
           className="inline-flex items-center gap-0 whitespace-nowrap"
         >
-          {Array.from({ length: 8 }).map((_, i) => (
+          {Array.from({ length: 2 }).map((_, i) => (
             <span key={i} className="inline-flex items-center gap-6 pr-6">
               {items.map((item, idx) => (
                 <React.Fragment key={idx}>

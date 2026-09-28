@@ -381,12 +381,11 @@ export default function ProjectDetails({ project }: { project: Project }) {
               offset={['start 0.98', 'end 0.88']}
               className="text-muted text-base sm:text-lg justify-center mb-1"
             />
-            <a
+            {site.email && <a
               href={`mailto:${site.email}`}
+              aria-label={`Email ${site.email}`}
               className="text-lg sm:text-xl font-semibold text-[#bab6b3] hover:text-[#d4d2d0] transition"
-            >
-              {site.email}
-            </a>
+            >{site.email}</a>}
           </div>
           <button
             onClick={scrollToTop}

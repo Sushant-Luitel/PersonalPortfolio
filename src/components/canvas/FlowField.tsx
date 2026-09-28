@@ -30,7 +30,7 @@ export default function FlowField() {
     let width = 0;
     let height = 0;
     let rafId: number | null = null;
-    let visible = true;
+    let visible = false;
     let time = Math.random() * 100;
     const mouse = { x: -9999, y: -9999 };
     let particles: Particle[] = [];

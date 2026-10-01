@@ -49,6 +49,7 @@ export default async function OpenGraphImage() {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 22, color: '#c9b8aa' }}>
           <span>Kathmandu, Nepal</span>
+          <span>Explore my work →</span>
           <span>sushantluitel.com.np</span>
         </div>
       </div>

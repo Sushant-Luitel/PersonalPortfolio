@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta
           name="description"
-          content="The personal portfolio of Sushant Luitel, a frontend engineer building production web applications with React, Next.js, Astro, and TypeScript."
+          content="Frontend developer in Nepal building production web experiences with React, Next.js, Astro, and TypeScript. Explore my work."
         />
       </head>
       <body

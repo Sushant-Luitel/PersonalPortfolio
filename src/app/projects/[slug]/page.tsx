@@ -15,15 +15,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Project Not Found',
     };
   }
+  const socialDescription =
+    project.description.length > 125
+      ? `${project.description.slice(0, 122).trimEnd()}…`
+      : project.description;
   return {
     title: project.title,
-    description: project.description,
+    description: socialDescription,
     alternates: {
       canonical: `/projects/${project.slug}`,
     },
     openGraph: {
       title: `${project.title} - Sushant Luitel`,
-      description: project.description,
+      description: socialDescription,
       url: `${site.url}/projects/${project.slug}`,
       siteName: 'Sushant Luitel Portfolio',
       images: [
@@ -39,7 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: `${project.title} - Sushant Luitel`,
-      description: project.description,
+      description: socialDescription,
       images: [project.hoverImage || project.images[0]],
     },
   };

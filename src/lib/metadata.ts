@@ -7,7 +7,7 @@ export const siteMetadata: Metadata = {
     template: '%s | Sushant Luitel',
   },
   description:
-    'The personal portfolio of Sushant Luitel, a frontend developer in Nepal building production web applications with React, Next.js, Astro, and TypeScript.',
+    'Frontend developer in Nepal building production web experiences with React, Next.js, Astro, and TypeScript. Explore my work.',
   keywords: [
     'Sushant Luitel',
     'Web Developer',
@@ -42,7 +42,7 @@ export const siteMetadata: Metadata = {
   openGraph: {
     title: 'Sushant Luitel — Frontend Developer',
     description:
-      'The personal portfolio of Sushant Luitel, a frontend developer building production web applications with React, Next.js, Astro, and TypeScript.',
+      'Frontend developer in Nepal building production web experiences with React, Next.js, Astro, and TypeScript. Explore my work.',
     url: 'https://sushantluitel.com.np/',
     siteName: 'Sushant Luitel Portfolio',
     locale: 'en_US',
@@ -60,7 +60,7 @@ export const siteMetadata: Metadata = {
     card: 'summary_large_image',
     title: 'Sushant Luitel — Frontend Developer',
     description:
-      'The personal portfolio of Sushant Luitel, a frontend developer building production web applications with React, Next.js, Astro, and TypeScript.',
+      'Frontend developer in Nepal building production web experiences with React, Next.js, Astro, and TypeScript. Explore my work.',
     images: ['/opengraph-image'],
   },
   robots: {

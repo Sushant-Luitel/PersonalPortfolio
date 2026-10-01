@@ -694,7 +694,7 @@ export default function ProjectsPage() {
                     >
                       <Image
                         src={imgUrl}
-                        alt=""
+                        alt={`${project.title} project interface preview`}
                         fill
                         sizes="480px"
                         priority={idx < 2}

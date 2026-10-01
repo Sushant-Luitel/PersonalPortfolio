@@ -133,7 +133,14 @@ const NavbarBrand: React.FC<NavbarBrandProps> = ({ logoRef, handleLinkClick }) =
         aria-label="sushant dev luitel — home"
       >
         <div className="transition-transform duration-500 ease-in-expo group-hover:rotate-[360deg] flex items-center justify-center overflow-hidden rounded-sm">
-          <Image src="/brand-logo.png" alt="" width={42} height={34} priority className="h-[30px] w-[38px] object-cover object-center" />
+          <Image
+            src="/brand-logo.png"
+            alt="Sushant Luitel logo"
+            width={42}
+            height={34}
+            priority
+            className="h-[30px] w-[38px] object-cover object-center"
+          />
         </div>
         <div className="relative ms-2 flex items-center whitespace-nowrap text-warm text-lg font-sans tracking-wide font-medium leading-none">
           <span>sushant</span>

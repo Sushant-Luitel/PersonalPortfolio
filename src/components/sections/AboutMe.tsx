@@ -1,10 +1,10 @@
 'use client';
 
 import { useRef } from 'react';
+import Image from 'next/image';
 import { gsap, useGSAP } from '@/lib/gsap';
 import ScrollWordReveal from '@/components/ui/ScrollWordReveal';
 import AnimatedHeading from '@/components/ui/AnimateHeading';
-import FlowField from '@/components/canvas/FlowField';
 
 const CREDENTIALS = [
   {
@@ -230,7 +230,13 @@ const About = () => {
           <div className="grid grid-cols-12 gap-6 md:gap-8 pb-16 md:pb-24 items-center">
             <div className="col-span-12 md:col-span-5 lg:col-span-5 flex items-center justify-center">
               <div className="about-image-wrapper relative group w-full max-w-[350px] md:max-w-[380px] h-[360px] md:h-[480px] bg-elevated-dark rounded-2xl overflow-hidden border border-border-subtler shadow-2xl">
-                <FlowField />
+                <Image
+                  src="/sushant-luitel-portrait.png"
+                  alt="Sushant Luitel, frontend developer, wearing a navy suit"
+                  fill
+                  sizes="(max-width: 767px) 350px, 380px"
+                  className="object-cover object-top"
+                />
               </div>
             </div>
 

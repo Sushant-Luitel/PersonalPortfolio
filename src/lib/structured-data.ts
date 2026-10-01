@@ -13,7 +13,7 @@ export const homeStructuredData = {
       '@id': personId,
       name: site.name,
       url: `${site.url}/`,
-      image: `${site.url}/opengraph-image`,
+      image: `${site.url}/sushant-luitel-portrait.png`,
       jobTitle: 'Frontend Engineer',
       description:
         'Frontend engineer in Kathmandu, Nepal, building production web applications with React, Next.js, Astro, and TypeScript.',
